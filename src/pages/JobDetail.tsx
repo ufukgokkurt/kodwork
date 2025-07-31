@@ -11,16 +11,28 @@ import React, { useEffect, useState } from 'react';
 import { API_URL, Job } from '../Utils';
 import axios from 'axios';
 import RenderHTML from 'react-native-render-html';
- 
+import { useDispatch, useSelector } from 'react-redux';
+import type { RootState } from '../redux/store';
+import { addFavorite } from '../redux/favoriteSlice';
 
 export default function JobDetail({ route }) {
+  const [job, setJob] = useState<Job>();
+
+  const dispatch = useDispatch();
+  const favorites = useSelector((state: RootState) => state.favorite.jobs);
+  const isFavorite = favorites.some(fav => fav.id === job?.id);
+  const handleFavorite = () => {
+    if (!isFavorite) {
+      dispatch(addFavorite(job));
+    }
+  };
+
   const { width } = useWindowDimensions();
 
   const { id } = route.params;
 
-  const [job, setJob] = useState<Job>();
-
   const [indicator, setIndicator] = useState(false);
+
   useEffect(() => {
     setIndicator(true);
     axios
@@ -57,14 +69,14 @@ export default function JobDetail({ route }) {
             <RenderHTML contentWidth={width} source={{ html: job?.contents }} />
           </View>
           <View style={styles.buttonContainer}>
-      <TouchableOpacity style={styles.btn}>
-         <Text style={styles.btnText}>Send</Text>
-      </TouchableOpacity>
+            <TouchableOpacity style={styles.btn}>
+              <Text style={styles.btnText}>Send</Text>
+            </TouchableOpacity>
 
-      <TouchableOpacity style={styles.btn}>
-         <Text style={styles.btnText}>Add Favorite</Text>
-      </TouchableOpacity>
-    </View>
+            <TouchableOpacity style={styles.btn} onPress={handleFavorite}>
+              <Text style={styles.btnText}>Add Favorite</Text>
+            </TouchableOpacity>
+          </View>
         </View>
       )}
     </ScrollView>
@@ -91,12 +103,12 @@ const styles = StyleSheet.create({
   content: {
     backgroundColor: 'white',
   },
- buttonContainer: {
+  buttonContainer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 10,
     gap: 10,
-    paddingBottom:20
+    paddingBottom: 20,
   },
   btn: {
     backgroundColor: 'red',

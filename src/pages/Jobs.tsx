@@ -21,7 +21,7 @@ export default function Jobs() {
   }, []);
   return (
     <SafeAreaView style={styles.container}>
-      {indicator ? <ActivityIndicator   size="large"/> : <FlatList data={jobList} renderItem={({item}) =><JobItem job={item} /> } />}
+      {indicator ? <ActivityIndicator   size="large"/> : <FlatList data={jobList} renderItem={({item}) =><JobItem job={item} favorite={false} /> } />}
     </SafeAreaView>
   );
 }

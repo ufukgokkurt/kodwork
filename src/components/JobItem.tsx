@@ -1,22 +1,31 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Button, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
 import { Job } from '../Utils';
 import { useNavigation } from '@react-navigation/native';
-
+import { useDispatch} from 'react-redux';
+import { removeFavorite } from '../redux/favoriteSlice';
  
 
 type JobItemProps = {
   job:Job;
+  favorite?: boolean; 
 };
 
-export default function JobItem({job}:JobItemProps) {
+export default function JobItem({job,favorite}:JobItemProps) {
     const navigation= useNavigation();
+      const dispatch = useDispatch();
+    
   return (
     <TouchableOpacity style={styles.panel} onPress={()=>navigation.navigate('Details',{id:job.id})}>
       <Text style={styles.title}>{job.name}</Text>
       <Text style={styles.company}>{job.company.name}</Text>
        <Text style={styles.location}>{job.locations[0].name}</Text>
         <Text style={styles.levels}>{job.levels[0].name}</Text>
+        {favorite && (
+        <View style={styles.removeButton}>
+          <Button title="Remove" color="white" onPress={()=>dispatch(removeFavorite(job.id))} />
+        </View>
+      )}
     </TouchableOpacity>
   )
 }
@@ -58,5 +67,11 @@ const styles = StyleSheet.create({
         fontWeight:'bold',
         alignSelf:'flex-end'
 
-    }
+    },
+     removeButton: {
+    marginTop: 10,
+    alignSelf: 'center',
+    backgroundColor:'red',
+    width:'100%'
+  },
 })

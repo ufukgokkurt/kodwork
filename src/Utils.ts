@@ -4,20 +4,14 @@ export interface Job {
     contents:String;
     name:String;
     id:Number;
-    locations:[
-        {
-        name:String;
-    }
-    ]
-    levels:[
-        {
-        name:String;
-        }
-    ]
-    company:{
-        name:String;
-    };
+    locations: { name: string }[];
+    levels: { name: string }[];
+    company: { name: string };
+};
 
+export interface FavoriteState {
+  jobs: Job[];
 }
+ 
 
  

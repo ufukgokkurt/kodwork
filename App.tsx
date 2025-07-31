@@ -15,7 +15,7 @@ function App() {
   return (
     <NavigationContainer>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <Drawer.Navigator>
+      <Drawer.Navigator screenOptions={{ headerShown:false}}>
         <Drawer.Screen name="Jobs" component={StackNavigator} />
         <Drawer.Screen name='Favorite' component={FavoriteJob}/>
       </Drawer.Navigator>

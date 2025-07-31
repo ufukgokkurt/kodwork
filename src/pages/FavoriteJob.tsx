@@ -1,11 +1,16 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { FlatList, StyleSheet, Text, View } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios';
+import { API_URL } from '../Utils';
+
+
 
 export default function FavoriteJob() {
+
   return (
-    <View>
-      <Text>FavoriteJob</Text>
-    </View>
+   <Text>DDDD</Text>
+
+    
   )
 }
 
